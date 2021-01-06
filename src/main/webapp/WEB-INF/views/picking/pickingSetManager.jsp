@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+		<div class="content">
+		    <div class="container-xl" style="width:700px; height:400px;">
+		    	<!-- 콘텐츠 헤더 -->
+					<div class="page-header d-print-none">
+						<div class="row align-items-center">	
+							<div class="col">
+								<h2 class="page-title">
+									피킹 담당자 배정
+								</h2>
+							</div>
+						</div>
+					</div>
+					<div class="card col-12">
+						<div class="card-header">
+							<div class="col-12" style="height:25px;line-height: 200%;">
+								<div class="row">
+									&nbsp;&nbsp;&nbsp;담당자 :&nbsp; <input type="text" class="form-control" style="width:100px;height:25px;">
+									<input type="button" class="btn btn-light" style="width:50px;height:25px;line-height: 85%;" value="적용">
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive" style="max-height:380px;">
+								<table class="table card-table table-vcenter text-nowrap datatable">
+									<thead>
+										<tr>
+											<th class="text-center">피킹번호</th>
+											<th class="text-center">품 목 명</th>
+											<th class="text-center">수량</th>
+											<th class="text-center">작업예정일시</th>
+											<th class="text-center">담 당 자</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="text-center">10</td>
+											<td class="text-center">취급 품목 유형</td>
+											<td class="text-center">사용중</td>
+											<td class="text-center">사용중</td>
+											<td class="text-center">사용중</td>
+										</tr>
+										<tr>
+											<td class="text-center">20</td>
+											<td class="text-center">품목 그룹</td>
+											<td class="text-center">사용중</td>
+											<td class="text-center">사용중</td>
+											<td class="text-center">사용중</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /table-responsive -->
+						</div>
+						<!-- card-body -->
+					</div>
+					<!-- /card col-12 -->
+					<div class="row" style="margin-top : 10px;">
+						<div class="col-1">
+							<input type="button" class="btn btn-white" value="저장">
+						</div>
+						<div class="col-1">
+							<input type="button" class="btn btn-white" value="취소">
+						</div>
+					</div>
+					
+		    </div>
+		</div>
