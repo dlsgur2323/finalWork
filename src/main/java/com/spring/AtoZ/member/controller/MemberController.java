@@ -1,23 +1,46 @@
 package com.spring.AtoZ.member.controller;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.AtoZ.common.dto.SearchMap;
+import com.spring.AtoZ.member.service.MemberService;
+import com.spring.AtoZ.vo.ClientVO;
 
 @Controller
-@RequestMapping("/member")
 public class MemberController {
 
-	@RequestMapping("/memberList")
-	public String memberList() {
-		String url = "member/memberList.index";
-		return url;
+	@Autowired
+	private MemberService memberService;
+	
+	@RequestMapping("/SY/member/memberList")
+	public ModelAndView memberList(ModelAndView mnv, SearchMap sm, @RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="") String keyword) throws Exception{
+		String url = "member/memberList.frame";
+		
+		sm.put("searchType", searchType);
+		sm.put("keyword", keyword);
+		sm.setUrl("/SY/member/memberList");
+		Map<String, Object> dataMap = memberService.getClientList(sm);
+		mnv.addAllObjects(dataMap);
+		mnv.setViewName(url);
+		return mnv;
 	}
 	
-	@RequestMapping("/companyDetail")
-	public String companyDetail() {
-		String url = "member/companyDetail.pop";
-		return url;
+	@RequestMapping("/SY/member/companyDetail")
+	@ResponseBody
+	public ResponseEntity<ClientVO> companyDetail(String cl_id) throws Exception {
+		ClientVO client = memberService.getClient(cl_id);
+		return new ResponseEntity<ClientVO>(client,HttpStatus.OK);
 	}
+	
 	
 	@RequestMapping("/warehouseDetail")
 	public String warehouseDetail() {

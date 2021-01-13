@@ -4,3 +4,13 @@
 <html>
 <head>
 </head>
+<%
+	String ref = request.getHeader("REFERER");
+	if(ref == null){
+%>
+		<script>
+			location.href="<%=request.getContextPath()%>/";
+		</script>
+<%		
+	}
+%>

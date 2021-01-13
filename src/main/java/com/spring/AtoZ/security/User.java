@@ -8,38 +8,41 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.spring.AtoZ.vo.MemberVO;
+import com.spring.AtoZ.vo.ClientVO;
+
 
 
 public class User implements UserDetails{
 	
-	private MemberVO member;
+	private ClientVO client;
 	public User() {};
-	public User(MemberVO member) {
-		this.member = member;
+	public User(ClientVO client) {
+		this.client = client;
 	}
-	public void setUser(MemberVO member) {
-		this.member = member;
+	private void setUser(ClientVO client) {
+		this.client = client;
+
+
 	}
 		
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		
-		roles.add(new SimpleGrantedAuthority(member.getAuthority()));
+		roles.add(new SimpleGrantedAuthority(client.getType_code()));
 		return roles;
 	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return member.getPwd();
+		return client.getCl_pwd();
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return member.getId();
+		return client.getCl_id();
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class User implements UserDetails{
 	@Override
 	public boolean isAccountNonLocked() { //휴먼계정 여부
 		// TODO 계정이 잠겨 있지 않으면 True
-		return member.getEnabled() ==1;
+		return client.getAct_yn() ==1;
 	}
 
 	@Override
@@ -61,13 +64,13 @@ public class User implements UserDetails{
 	}
 
 	@Override
-	public boolean isEnabled() { // 사용제제 엽
+	public boolean isEnabled() { // 사용제제 여부
 		// TODO 활성화/비활성화
-		return member.getEnabled() ==1;
+		return client.getAct_yn() ==1;
 	}
 	
-	public MemberVO getMemberVO() {
-		return this.member;
+	public ClientVO getClientVO() {
+		return this.client;
 	}
 	
 }

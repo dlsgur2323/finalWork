@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dashboard-Mapper">
+
+	<select id="selectQnaCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM qna
+		WHERE WRT_YMD = TO_CHAR(sysdate, 'yyyymmdd');	
+	</select>
+	
+	<select id="selectContractReqCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM CLIENT
+		WHERE CRE_YMD = TO_CHAR(sysdate, 'yyyymmdd') AND sts_code = 'CR001'
+	</select>
+	
+	<select id="selectContractExpCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM CONTRACT
+		WHERE EXP_YMD = TO_CHAR(sysdate, 'yyyymmdd') AND sts_code = 'CR003'
+	</select>
+	
+	<select id="selectPaymentHisCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM pay_his
+		WHERE PAY_YMD = TO_CHAR(sysdate, 'yyyymmdd') AND sts_code = 'PY003'
+	</select>
+
+	<!-- 금일 입고 예정 건수 -->
+	<select id="selectCountinOrderByToday" parameterType="str" resultType="int">
+		select count(*) from in_order
+		where co_code = #{cl_code} and deli_ymd = TO_CHAR(sysdate,'YYYYMMDD')
+	</select>
+	
+	<!-- 금일 출고 예정 건수 -->
+	<select id="selectCountreleaseByToday" parameterType="str" resultType="int">
+		select count(*) from release 
+		where co_code = #{cl_code} and rls_ymd = TO_CHAR(sysdate,'YYYYMMDD')
+	</select>
+
+	<!-- 계약중인 물류센터 수 -->
+	<select id="selectCountc2cContract" resultType="int" parameterType="str">
+		select count(*) from c2c_contract
+		where co_code = #{cl_code} and sts_code = 'CR002'
+	</select>
+	
+	<!-- 아직 읽지 않은 쪽지 수 -->
+	<select id="selectCountmsgByreadYn" parameterType="str" resultType="int">
+		select count(*) from msg 
+		where RC_CODE = (select cl_code from client where cl_code = #{cl_code})
+		and read_yn=0
+	</select>
+
+	<!-- 입고 예정 목록 -->
+	<select id="selectReceiveListByToday" parameterType="str" resultType="com.spring.AtoZ.dashboard.dto.OrderCommand">
+		select sender, (select cl_name from client where wh_code=cl_code) cl_name, wh_mngr, ord_mngr, req_ymd, deli_ymd from in_order 
+		where co_code = #{cl_code} and sts_code = 'PR002' and deli_ymd = to_char(sysdate,'YYYYMMDD')
+	</select>
+
+	<!-- 출고 예정 목록 -->
+	<select id="selectReleaseListByToday" parameterType="str" resultType="com.spring.AtoZ.dashboard.dto.ReleaseCommand">
+		select (select cl_name from client where client.cl_code=release.wh_code) cl_name, dst_name, (select emp_name from wh_emp where release.emp_id = wh_emp.emp_id) emp_name, rls_ymd from release
+		where co_code= #{cl_code} and sts_code='PR005' and rls_ymd = TO_CHAR(sysdate,'YYYYMMDD')
+	</select>
+	
+	<!-- 입고 스케줄 -->
+	<select id="selectOrderSchedule" parameterType="str" resultType="com.spring.AtoZ.dashboard.dto.OrderScheduleCommand">
+		select sender, deli_ymd from in_order where co_code = #{cl_code}
+	</select>
+	
+	
+	<!-- 출고 스케줄 -->
+	<select id="selectReleaseSchedule" parameterType="str" resultType="com.spring.AtoZ.dashboard.dto.ReleaseScheduleCommand">
+		select (select cl_name from client where wh_code=cl_code) cl_name, dst_name, rls_ymd, start_date, end_date from release where co_code=#{cl_code}
+	</select>
+	
+	<select id="getRlsReqNum" resultType="int">
+		SELECT count(rls_no) FROM release WHERE sts_code = 'PR001' and rls_ymd = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+	
+	<select id="getInReqNum" resultType="int">
+		SELECT count(ord_no) FROM in_order WHERE sts_code = 'PR001' and req_ymd = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+
+	<select id="getInPlanNum" resultType="int">
+		SELECT count(ord_no) FROM in_order WHERE	 sts_code = 'PR002' and deli_ymd = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+
+	<select id="getOutPlanNum" resultType="int">
+		SELECT count(rls_no) FROM release WHERE sts_code = 'PR005' and rls_ymd = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+
+	<select id="getEmpList" resultType="empcmd">
+		SELECT we.emp_name, we.emp_phone, we.emp_mail, we.emp_job, TO_CHAR(ah.work_date,'YYYY-MM-DD HH24:mm:ss') work_date, TO_CHAR(ah.out_date,'YYYY-MM-DD HH24:mm:ss') out_date, wd.dept_name, r.rnk_name, cc.cm_name
+		FROM wh_emp we, attnd_his ah, wh_dept wd, rank r, cm_code cc
+		WHERE SYSDATE >= ah.work_date and ah.out_date IS NULL and TO_CHAR(ah.work_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        AND we.emp_id = ah.emp_id
+		AND wd.dept_no = we.dept_no and wd.cl_code = we.wh_code
+		AND we.rnk_no = r.rnk_no and r.wh_code = we.wh_code
+		AND we.sts_code = cc.cm_code
+	</select>
+</mapper> 

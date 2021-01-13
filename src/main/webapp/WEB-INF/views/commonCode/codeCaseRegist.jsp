@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<div class="content">
 	    <div class="container-xl" style="width:500px; height:200px;">
 	    	<!-- 콘텐츠 헤더 -->
 			<div class="page-header d-print-none">
@@ -41,4 +40,3 @@
 			</div>
 				
 	    </div>
-	</div>

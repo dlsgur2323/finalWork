@@ -20,49 +20,46 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col-4"><strong>회원 아이디</strong></div>
-			<div class="col-8">test</div>
+			<div class="col-8" id="cl_id"></div>
 		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4"><strong>기업명</strong></div>
-			<div class="col-8">test</div>
+			<div class="col-8" id="cl_name"></div>
 		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4"><strong>대표자명</strong></div>
-			<div class="col-8">테스트</div>
+			<div class="col-8" id="cl_ceo"></div>
 		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4"><strong>사업자등록번호</strong></div>
-			<div class="col-8">000-00-000000</div>
+			<div class="col-8" id="cl_regno"></div>
 		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4"><strong>이메일</strong></div>
-			<div class="col-8">test@test.com</div>
+			<div class="col-8" id="cl_email"></div>
 		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4"><strong>전화번호</strong></div>
-			<div class="col-8">02-000-0000</div>
+			<div class="col-8" id="cl_tel"></div>
 		</div>
 		<hr/>
 		<div class="row">
 			<div class="col-4"><strong>주소</strong></div>
-			<div class="col-8" style="margin-bottom:3%;">test</div>
+			<div class="col-8" style="margin-bottom:3%;" id="cl_addr"></div>
 			<div id="map" style="width:95%;height:200px; border:1px solid black; margin:auto;"></div>
 		</div>
 	</div>
 </div>
 
 <div style="margin-top:2%; margin-left:5%;">
-<input type="button" class="btn btn-white" id="modifyBtn" value="수정"/>
-<input type="button" class="btn btn-white" id="removeBtn" style="margin:0% 2% 0% 2%;" value="삭제"/>
-<input type="button" class="btn btn-white" id="cancelBtn" value="취소"/>
+<%-- <c:if test="${loginUser.cl_id eq client.cl_id }"> --%>
+<!-- 	<input type="button" class="btn btn-white" id="modifyBtn" value="수정"/> -->
+<!-- 	<input type="button" class="btn btn-white" id="removeBtn" style="margin:0% 2% 0% 2%;" value="삭제"/> -->
+<%-- </c:if> --%>
+<input type="button" class="btn btn-white" id="cancelBtn" value="취소" onclick="closeDial($('#dialog1'))"/>
 </div>
-<script>
-	window.onload=function(){
-		
-	}
-</script>

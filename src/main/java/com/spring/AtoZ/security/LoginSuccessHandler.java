@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
-import com.spring.AtoZ.vo.MemberVO;
+import com.spring.AtoZ.vo.ClientVO;
 
 
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
@@ -27,7 +27,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		
 		User user = (User) authentication.getDetails();
 		
-		MemberVO loginUser = user.getMember();
+		ClientVO loginUser = user.getClientVO();
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", loginUser);
 		
@@ -35,10 +35,10 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		
 		//cookie
 		String rememberMe = request.getParameter("rememberMe");
-		String id = request.getParameter("id");
+		String cl_id = request.getParameter("cl_id");
 		
 		if(rememberMe != null && rememberMe.equals("check")) {
-			Cookie cookie = new Cookie("loginUser", id);
+			Cookie cookie = new Cookie("loginUser", cl_id);
 			cookie.setMaxAge(3*24*60*60);
 			cookie.setPath("/");
 			response.addCookie(cookie);
@@ -47,12 +47,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 	
-	private void logFile(MemberVO loginUser, HttpServletRequest request) throws IOException{
+	private void logFile(ClientVO loginUser, HttpServletRequest request) throws IOException{
 		String tag = "[login:user]";
 		String log = tag
-				+ loginUser.getId()
-				+ loginUser.getPhone()
-				+ loginUser.getEmail()
+				+ loginUser.getCl_id()
+				+ loginUser.getCl_tel()
+				+ loginUser.getCl_regno()
 				+ request.getRemoteAddr()
 				+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		

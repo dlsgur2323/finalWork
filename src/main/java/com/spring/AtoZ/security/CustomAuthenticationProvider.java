@@ -9,30 +9,28 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
-import com.spring.AtoZ.member.dao.MemberDAO;
-import com.spring.AtoZ.vo.MemberVO;
+import com.spring.AtoZ.serviceUse.dao.ServiceUseDAO;
+import com.spring.AtoZ.vo.ClientVO;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider{
 	
-	private MemberDAO memberDAO;
-	public void setMemberDAO(MemberDAO memberDAO) {
-		this.memberDAO = memberDAO;
+	private ServiceUseDAO serviceUseDAO;
+	public void setServiceUseDAO(ServiceUseDAO serviceUseDAO) {
+		this.serviceUseDAO = serviceUseDAO;
 	}
 	
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		String login_id = (String) auth.getPrincipal();
 		String login_pwd = (String) auth.getCredentials();
-		
-		MemberVO member = null;
-		
+		ClientVO client = null;
 		try {
-			member = memberDAO.selectMemberById(login_id);
+			client = serviceUseDAO.selectClientById(login_id);
 		} catch (SQLException e) {
 			throw new AuthenticationServiceException("Internal server error!");
 		}
-		if(member != null && login_pwd.equals(member.getPwd())) {
-			User authUser = new User(member);
+		if(client != null && login_pwd.equals(client.getCl_pwd())) {
+			User authUser = new User(client);
 			UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authUser.getUsername(), authUser.getPassword(), authUser.getAuthorities());
 			result.setDetails(authUser);
 			

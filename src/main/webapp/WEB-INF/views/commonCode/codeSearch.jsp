@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<div class="content">
+<!-- 	<div class="content"> -->
 	    <div class="container-xl" style="width:350px; height:500px;">
 	    	<!-- 콘텐츠 헤더 -->
 				<div class="page-header d-print-none">
@@ -24,16 +24,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="text-center">10</td>
-										<td class="text-center">취급 품목 유형</td>
-										<td class="text-center">사용중</td>
+									<c:forEach items="${typeList }" var="type">
+										<c:if test="${type.act_yn eq 1 }">
+									<tr class="clickableTr" onclick="setSearchType('${type.type_code}')">
+										<td class="text-center">${type.type_code }</td>
+										<td class="text-center">${type.type_name }</td>
+										<td class="text-center">${type.act_yn eq 1 ? '사용중' : '사용중지' }</td>
 									</tr>
-									<tr>
-										<td class="text-center">20</td>
-										<td class="text-center">품목 그룹</td>
-										<td class="text-center">사용중</td>
-									</tr>
+										</c:if>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -49,4 +48,4 @@
 				</div>
 				
 	    </div>
-	</div>
+<!-- 	</div> -->

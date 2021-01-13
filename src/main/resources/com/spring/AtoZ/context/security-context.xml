@@ -5,11 +5,58 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-
+	<!-- 인증 -->
+	<authentication-manager>
+		<authentication-provider ref="authenticator" />
+	</authentication-manager>
+	
+	<beans:bean id="authenticator"
+				class="com.spring.AtoZ.security.CustomAuthenticationProvider"
+				p:serviceUseDAO-ref="serviceUseDAO" 
+	/>
+	<!-- 인허가 -->
+	<http pattern="/resources/**" security="none"/>
+	
+	<http use-expressions="true" pattern="/**">
+	
+		<!-- <scrf disabled="true" /> Spring security 4.x에 적용 -->
+		<access-denied-handler error-page="/serviceUse/accessDenied" />
+		<intercept-url pattern="/AL/**" access="isAuthenticated()" />
+		<intercept-url pattern="/WC/**" access="hasAnyRole('CL002, CL001, CL003')" />
+		<intercept-url pattern="/WH/**" access="hasAnyRole('CL002, CL003')" />
+		<intercept-url pattern="/CO/**" access="hasAnyRole('CL001, CL003')" />
+		<intercept-url pattern="/SY/**" access="hasAnyRole('CL000')" />
+		<intercept-url pattern="/**" access="permitAll" />
+		
+		
+		<form-login
+			login-page="/serviceUse/loginForm"
+			login-processing-url="/serviceUse/login"
+			username-parameter="cl_id"
+			password-parameter="cl_pwd"
+			default-target-url="/index/SY004"
+			authentication-success-handler-ref="loginSuccessHandler"
+			authentication-failure-handler-ref="loginFailureHandler"
+		/>
+		<logout
+			logout-url="/serviceUse/logout.do"
+			invalidate-session="true"
+			logout-success-url="/"
+			delete-cookies="JSESSIONID"
+		/>
+		
+		<session-management invalid-session-url="/serviceUse/loginTimeOut">
+		
+			<concurrency-control
+				expired-url="/serviceUse/loginExpired"
+				max-sessions="1"
+				session-registry-ref="sessionRegistry"
+			/>
+		</session-management>
+	</http>
 	<beans:bean id="loginSuccessHandler"
 				class="com.spring.AtoZ.security.LoginSuccessHandler"
-				p:defaultTargetUrl="/index.do"
+				p:defaultTargetUrl="/index/SY004"
 				/>
 	<beans:bean id="loginFailureHandler" 
 				class="com.spring.AtoZ.security.LoginFailureHandler"

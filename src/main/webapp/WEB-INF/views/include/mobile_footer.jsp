@@ -1,5 +1,6 @@
   
   
+<%--   <script src="<%=request.getContextPath()%>/resources/js/qrCodeScanner.js"></script> --%>
   
   
   

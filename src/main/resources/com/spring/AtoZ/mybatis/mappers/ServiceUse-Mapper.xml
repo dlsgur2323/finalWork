@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ServiceUse-Mapper">
+	
+	<select id="selectClientById" parameterType="str" resultType="client">
+		select *
+		from client
+		where cl_id=#{cl_id}
+	</select>
+	
+</mapper>

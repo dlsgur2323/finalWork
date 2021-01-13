@@ -4,9 +4,9 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Dashboard</title>
+  <title>AtoZ</title>
   <!-- CSS files -->
   <link href="<%=request.getContextPath()%>/resources/bootstrap/dist/libs/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
   <link href="<%=request.getContextPath()%>/resources/bootstrap/dist/css/tabler.min.css" rel="stylesheet" />
@@ -19,6 +19,7 @@
   <link href="<%=request.getContextPath()%>/resources/bootstrap/dist/libs/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
   <link href="<%=request.getContextPath()%>/resources/bootstrap/dist/libs/nouislider/distribute/nouislider.min.css" rel="stylesheet" />
 
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/login.css" />
 
 
   <style>
@@ -72,4 +73,3 @@
       }
     }
   </style>
-  </head>

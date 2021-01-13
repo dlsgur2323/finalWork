@@ -8,7 +8,7 @@
 	if(navigator.platform){
 		if(filter.indexOf(navigator.platform.toLowerCase())<0){
 			// mobile page go
-			location.href="m.main";
+			location.href="m.loginForm";
 		} else {
 			// pc page go
 			location.href="common/indexPage";

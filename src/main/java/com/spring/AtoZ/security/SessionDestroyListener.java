@@ -7,8 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.session.SessionDestroyedEvent;
 
-import com.spring.AtoZ.vo.MemberVO;
-
+import com.spring.AtoZ.vo.ClientVO;
 
 public class SessionDestroyListener implements ApplicationListener<SessionDestroyedEvent>{
 	@Override
@@ -23,9 +22,9 @@ public class SessionDestroyListener implements ApplicationListener<SessionDestro
 					try {
 						User user = (User) auth.getDetails();
 						
-						MemberVO member = user.getMember();
+						ClientVO client = user.getClientVO();
 						
-						System.out.println("user invalid session : " + member);
+						System.out.println("user invalid session : " + client);
 						
 					}catch (Exception e) {
 						e.printStackTrace();

@@ -10,7 +10,12 @@
 		<typeAlias type="java.lang.Integer" alias="int"/>
 		
 		<typeAlias type="com.spring.AtoZ.vo.MenuVO" alias="menu"/>
-		
-	</typeAliases>
+		<typeAlias type="com.spring.AtoZ.vo.ClientVO" alias="client"/>
+		<typeAlias type="com.spring.AtoZ.vo.EmployeeVO" alias="emp"/>
+		<typeAlias type="com.spring.AtoZ.dashboard.dto.EmpCommand" alias="empcmd"/>
+		<typeAlias type="com.spring.AtoZ.vo.EmployeeVO" alias="emp"/>
+		<typeAlias type="com.spring.AtoZ.vo.CommonCodeVO" alias="coCode"/>
+		<typeAlias type="com.spring.AtoZ.vo.OrderVO" alias="order"/>
+	</typeAliases> 
 
 </configuration>
